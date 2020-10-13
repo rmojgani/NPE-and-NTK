@@ -1,9 +1,9 @@
 from __future__ import division
-import tensorflow as tf
+#import tensorflow as tf
 import numpy as np
 import math, random
-#import tensorflow.compat.v1 as tf
-#tf.disable_v2_behavior() 
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior() 
 N = 256
 M=10000
 a = 0
@@ -93,8 +93,9 @@ def neural_network_model(x_ph,t_ph):
     return output, L1, L2, L3, L4, L5
 
 ###### Main #################################
+print('---------------- Main ---------------')
 
-
+print('NN initialize')
 prediction, L1, L2, L3, L4, L5 = neural_network_model(x_ph,t_ph)
 pred_dx = tf.gradients(prediction, x_ph)[0]
 pred_dx2 = tf.gradients(tf.gradients(prediction, x_ph),x_ph)[0]
@@ -117,9 +118,9 @@ cost=tf.reduce_mean(tf.square(u_t + u*u_x - (0.02)*u_xx - y_ph))
 
 optimizer = tf.train.AdamOptimizer(learn_rate).minimize(cost)
 
-
+print('Train')
     # cycles feed forward + backprop
-hm_epochs = 500
+hm_epochs = 5
 
 with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
