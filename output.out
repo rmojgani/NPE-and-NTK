@@ -1,0 +1,6 @@
+start
+---------------- Main ---------------
+NN initialize
+Train
+('Epoch', 0, 'completed out of', 250, 'loss:', 92.58618039846421, 'time=', 6.916059970855713)
+('Epoch', 10, 'completed out of', 250, 'loss:', 83.56945039391518, 'time=', 68.96192598342896)
