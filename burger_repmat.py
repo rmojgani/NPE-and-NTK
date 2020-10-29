@@ -12,7 +12,7 @@ M = 1000#0
 a = -1
 b = +1
 ti= 0
-to= 0.2
+to= 1.0
 batch_size=100
 
 X = np.arange(a, b, float((b-a)/N)).reshape((N,1))
