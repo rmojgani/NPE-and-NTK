@@ -1,0 +1,15 @@
+#!/bin/bash
+#BATCH --job-name="TensorFlow"
+#SBATCH --output="TFResmin.%j.%N.out"
+#SBATCH --partition=gpu-shared
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=6
+#SBATCH --gres=gpu:k80:1
+#SBATCH --mem=25G
+#SBATCH -t 12:00:00
+#SBATCH -A riu129
+#Run the job
+#
+module load singularity
+singularity exec /share/apps/gpu/singularity/images/keras/keras-tensorflow-gpu.simg lsb_release -a
+singularity exec /share/apps/gpu/singularity/images/keras/keras-tensorflow-gpu.simg python -u burger_repmat.py > output.out

@@ -1,15 +1,18 @@
 from __future__ import division
-#import tensorflow as tf
+import tensorflow as tf
 import numpy as np
 import math, random
-import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior() 
+#import tensorflow.compat.v1 as tf
+#tf.disable_v2_behavior() 
+
+print('start')
+
 N = 256
-M=10000
-a = 0
-b = 1.0
-ti=0
-to=2
+M = 1000#0
+a = -1
+b = +1
+ti= 0
+to= 0.2
 batch_size=100
 
 X = np.arange(a, b, float((b-a)/N)).reshape((N,1))
@@ -100,7 +103,7 @@ prediction, L1, L2, L3, L4, L5 = neural_network_model(x_ph,t_ph)
 pred_dx = tf.gradients(prediction, x_ph)[0]
 pred_dx2 = tf.gradients(tf.gradients(prediction, x_ph),x_ph)[0]
 pred_dt=tf.gradients(prediction,t_ph)[0]
-u=tf.math.sin(-(math.pi)*x_ph)+(1+x_ph)*(1-x_ph)*t_ph*prediction
+u=tf.math.sin(-(math.pi)*x_ph)+1+(x_ph)*(1-x_ph)*t_ph*prediction
 #u=tf.math.sin(2*(math.pi)*x_ph)+x_ph*(1-x_ph)*t_ph*prediction
 usq=tf.math.square(u)
 usq_dx=tf.gradients(usq,x_ph)[0]
@@ -120,8 +123,10 @@ optimizer = tf.train.AdamOptimizer(learn_rate).minimize(cost)
 
 print('Train')
     # cycles feed forward + backprop
-hm_epochs = 5
+hm_epochs = 250
 
+import time as time
+tic = time.time()
 with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
 
@@ -138,7 +143,7 @@ with tf.Session() as sess:
               _, l = sess.run([optimizer,cost], feed_dict={x_ph:inputX, t_ph:inputT, y_ph:inputY})
               epoch_loss += l
             if epoch %10 == 0:
-                print('Epoch', epoch, 'completed out of', hm_epochs, 'loss:', float(epoch_loss/batch_size))
+                print('Epoch', epoch, 'completed out of', hm_epochs, 'loss:', float(epoch_loss/batch_size), 'time=',time.time()-tic)
 
 
         # Predict a new input by adding a random number, to check whether the network has actually learned
@@ -157,4 +162,3 @@ pred_dx_reshape=np.reshape(mypred_dx,[N,M],order='F')
 
 np.savetxt('prediction.csv',pred_reshape,delimiter=',')
 np.savetxt('prediction_dx.csv',pred_dx_reshape,delimiter=',')
- 
