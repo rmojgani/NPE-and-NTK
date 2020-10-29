@@ -123,7 +123,7 @@ optimizer = tf.train.AdamOptimizer(learn_rate).minimize(cost)
 
 print('Train')
     # cycles feed forward + backprop
-hm_epochs = 250
+hm_epochs = 500
 
 import time as time
 tic = time.time()
