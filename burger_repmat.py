@@ -100,10 +100,11 @@ print('---------------- Main ---------------')
 
 print('NN initialize')
 prediction, L1, L2, L3, L4, L5 = neural_network_model(x_ph,t_ph)
-pred_dx = tf.gradients(prediction, x_ph)[0]
+pred_dx  = tf.gradients(prediction, x_ph)[0]
 pred_dx2 = tf.gradients(tf.gradients(prediction, x_ph),x_ph)[0]
-pred_dt=tf.gradients(prediction,t_ph)[0]
-u=tf.math.sin(-math.pi*x_ph)+1+(tf.math.sin(math.pi*x_ph/2.0+math.pi/2.0))*t_ph*prediction
+pred_dt  = tf.gradients(prediction,t_ph)[0]
+u        = tf.math.sin(-math.pi*x_ph)+1+(tf.math.sin(math.pi*x_ph/2.0+math.pi/2.0))*t_ph*prediction
+u[0]=u[-1]
 #u=tf.math.sin(2*(math.pi)*x_ph)+x_ph*(1-x_ph)*t_ph*prediction
 usq=tf.math.square(u)
 usq_dx=tf.gradients(usq,x_ph)[0]
@@ -123,7 +124,7 @@ optimizer = tf.train.AdamOptimizer(learn_rate).minimize(cost)
 
 print('Train')
     # cycles feed forward + backprop
-hm_epochs = 250
+hm_epochs = 25
 
 import time as time
 tic = time.time()
