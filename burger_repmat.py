@@ -108,7 +108,7 @@ u=tf.math.sin(-(math.pi)*x_ph)+1+(tf.math.sin(math.pi*x_ph))*t_ph*prediction
 usq=tf.math.square(u)
 usq_dx=tf.gradients(usq,x_ph)[0]
 u_x=tf.gradients(u,x_ph)[0]
-u_xx=tf.gradients(u_x,x_ph)[0]
+#u_xx=tf.gradients(u_x,x_ph)[0]
 u_t=tf.gradients(u,t_ph)[0]
     # Compute u and its second derivative
     #u = A + B*x_ph + (x_ph*x_ph)*prediction
@@ -116,14 +116,14 @@ u_t=tf.gradients(u,t_ph)[0]
      
     # The cost function is just the residual of u''(x) - x*u(x) = 0, i.e. residual = u''(x)-x*u(x)
     #cost = tf.reduce_mean(tf.square(pred_dt- pred*pred_dx - pred_dx2 - y_ph))
-cost=tf.reduce_mean(tf.square(u_t + u*u_x - (0.02)*u_xx - y_ph))
+cost=tf.reduce_mean(tf.square(u_t + u_x ))
     #cost=tf.reduce_mean(tf.square(u_t - (0.01/math.pi)*u_xx - y_ph))
 
 optimizer = tf.train.AdamOptimizer(learn_rate).minimize(cost)
 
 print('Train')
     # cycles feed forward + backprop
-hm_epochs = 500
+hm_epochs = 250
 
 import time as time
 tic = time.time()
