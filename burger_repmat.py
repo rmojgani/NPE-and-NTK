@@ -116,7 +116,7 @@ u_t=tf.gradients(u,t_ph)[0]
      
     # The cost function is just the residual of u''(x) - x*u(x) = 0, i.e. residual = u''(x)-x*u(x)
     #cost = tf.reduce_mean(tf.square(pred_dt- pred*pred_dx - pred_dx2 - y_ph))
-cost=tf.reduce_mean(tf.square(u_t + u_x ))
+cost=tf.reduce_mean(tf.square( u_t + u_x ))
     #cost=tf.reduce_mean(tf.square(u_t - (0.01/math.pi)*u_xx - y_ph))
 
 optimizer = tf.train.AdamOptimizer(learn_rate).minimize(cost)
